@@ -1,5 +1,5 @@
 // src/pages/Home.jsx
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useClub } from '../context/ClubContext';
 import ClubCard from '../components/ClubCard';
@@ -10,6 +10,7 @@ const Home = () => {
   const [featuredClubs, setFeaturedClubs] = useState([]);
   const [activeAccordion, setActiveAccordion] = useState(null);
   const [currentAnimatedText, setCurrentAnimatedText] = useState(0);
+  const sectionRefs = useRef([]);
 
   const animatedTexts = [
     "Secure Payments",
@@ -32,6 +33,23 @@ const Home = () => {
       setCurrentAnimatedText((prev) => (prev + 1) % animatedTexts.length);
     }, 2000);
     return () => clearInterval(interval);
+  }, []);
+
+  // Scroll animation observer
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.feature-card, .club-card, .workflow-item, .accordion-item').forEach(el => {
+      observer.observe(el);
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   const toggleAccordion = (index) => {
@@ -84,6 +102,40 @@ const Home = () => {
     }
   ];
 
+  // Sample featured clubs data for demonstration
+  const sampleFeaturedClubs = [
+    {
+      id: 1,
+      name: "Neon Lounge",
+      rating: 4.5,
+      distance: "1.2 km",
+      category: "Lounge",
+      description: "Upscale lounge with premium cocktails and VIP service",
+      features: ["3 Drinks", "2 Food Items"],
+      image: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+    },
+    {
+      id: 2,
+      name: "Sky Bar",
+      rating: 4.8,
+      distance: "2.1 km",
+      category: "Rooftop",
+      description: "Rooftop bar with stunning city views and exotic cocktails",
+      features: ["2 Drinks", "1 Food Items"],
+      image: "https://images.unsplash.com/photo-1544145945-f90425340c7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      id: 3,
+      name: "Velvet Room",
+      rating: 4.7,
+      distance: "0.8 km",
+      category: "Nightclub",
+      description: "Exclusive nightclub with top DJs and premium bottle service",
+      features: ["5 Drinks", "3 Food Items", "VIP"],
+      image: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    }
+  ];
+
   return (
     <div className="home-page">
       {/* Hero Section */}
@@ -108,10 +160,10 @@ const Home = () => {
               </div>
 
               <div className="hero-actions">
-                <Link to="/clubs" className="btn btn-primary btn-glow">
+                <Link to="/clubs" className="btn btn-primary">
                   Start Shopping
                 </Link>
-                <Link to="/register" className="btn btn-secondary btn-shine">
+                <Link to="/register" className="btn btn-secondary">
                   Start Selling
                 </Link>
               </div>
@@ -200,7 +252,7 @@ const Home = () => {
           <div className="testimonial-content">
             <h2>ClubSync</h2>
             <blockquote>
-              "The club management tools and analytics have transformed how we operate our nightlife business."
+              "The club management tools and analytics have transformed how we operate our nightlife business. Revenue increased by 40% in the first month!"
             </blockquote>
             <div className="testimonial-author">
               <strong>Marcus Johnson</strong>
@@ -213,14 +265,25 @@ const Home = () => {
       {/* Workflow Section */}
       <section className="workflow-section">
         <div className="container">
+          <div className="section-header">
+            <h2>How It Works</h2>
+            <p>Simple process for clubs and customers</p>
+          </div>
           <div className="workflow-grid">
             <div className="workflow-item">
+              <div className="workflow-number">01</div>
               <h3>Club Lists Menu</h3>
               <p>Clubs create accounts and list their drinks and food with details, prices, and images.</p>
             </div>
             <div className="workflow-item">
+              <div className="workflow-number">02</div>
               <h3>Customer Discovers</h3>
               <p>Customers search, filter, and find their favorite drinks from premium clubs.</p>
+            </div>
+            <div className="workflow-item">
+              <div className="workflow-number">03</div>
+              <h3>Instant Pickup</h3>
+              <p>Skip the lines with QR code pickup and enjoy your orders immediately.</p>
             </div>
           </div>
         </div>
@@ -288,8 +351,41 @@ const Home = () => {
             <p>Discover the hottest spots in town</p>
           </div>
           <div className="clubs-grid">
-            {featuredClubs.map(club => (
-              <ClubCard key={club.id} club={club} />
+            {sampleFeaturedClubs.map(club => (
+              <div key={club.id} className="club-card">
+                <div className="club-card-image-container">
+                  <img src={club.image} alt={club.name} className="club-card-image" />
+                  <div className="club-card-overlay"></div>
+                </div>
+                <div className="club-card-content">
+                  <div className="club-card-header">
+                    <div>
+                      <h3 className="club-card-title">{club.name}</h3>
+                      <span className="club-distance">{club.distance}</span>
+                      <span className="club-category">{club.category}</span>
+                    </div>
+                    <div className="club-rating">
+                      <i className="fas fa-star"></i> {club.rating}
+                    </div>
+                  </div>
+                  <p className="club-card-description">{club.description}</p>
+                  <div className="club-features">
+                    {club.features.map((feature, index) => (
+                      <span key={index} className="club-feature">{feature}</span>
+                    ))}
+                  </div>
+                  <div className="club-card-footer">
+                    <div className="club-location">
+                      <i className="fas fa-map-marker-alt"></i> {club.distance} away
+                    </div>
+                    <div className="club-actions">
+                      <Link to={`/clubs/${club.id}`} className="btn btn-primary btn-sm">
+                        View Menu
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
           <div className="text-center">
@@ -307,10 +403,10 @@ const Home = () => {
             <h2>Ready to Get Started?</h2>
             <p>Join thousands of satisfied users today</p>
             <div className="cta-actions">
-              <Link to="/clubs" className="btn btn-primary btn-glow">
+              <Link to="/clubs" className="btn btn-primary">
                 Start Shopping →
               </Link>
-              <Link to="/register" className="btn btn-secondary btn-shine">
+              <Link to="/register" className="btn btn-secondary">
                 Start Selling →
               </Link>
             </div>

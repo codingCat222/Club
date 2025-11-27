@@ -10,7 +10,7 @@ const Navbar = () => {
   const { getCartItemsCount } = useCart();
   const navigate = useNavigate();
   const location = useLocation();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   // Scroll detection
@@ -33,171 +33,206 @@ const Navbar = () => {
   const handleLogout = () => {
     logout();
     navigate('/');
-    setIsMenuOpen(false);
+    setIsMobileMenuOpen(false);
   };
 
   const isActiveLink = (path) => {
     return location.pathname === path ? 'active' : '';
   };
 
+  // Close mobile menu when clicking on overlay
+  const handleOverlayClick = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
+
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
-      <div className="nav-container">
-        {/* Logo */}
-        <Link className="nav-logo" to="/">
-          <div className="nav-logo" style={{ marginRight: 'auto', marginLeft: '0', position: 'absolute', left: '2rem' }}>
-  <div className="logo-icon">
-    <i className="fas fa-cocktail"></i>
-  </div>
-  <span className="logo-text">ClubSync</span>
-</div>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <div className="nav-menu">
-          <Link 
-            className={`nav-link ${isActiveLink('/')}`} 
-            to="/"
-          >
-            <i className="fas fa-home"></i>
-            <span>Home</span>
-          </Link>
-          
-          <Link 
-            className={`nav-link ${isActiveLink('/clubs')}`} 
-            to="/clubs"
-          >
-            <i className="fas fa-search-location"></i>
-            <span>Explore</span>
+    <>
+      <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+        <div className="nav-container">
+          {/* Logo */}
+          <Link className="nav-logo" to="/">
+            <div className="logo-icon">
+              <i className="fas fa-cocktail"></i>
+            </div>
+            <span className="logo-text">ClubSync</span>
           </Link>
 
-          {user && user.role === 'user' && (
+          {/* Desktop Navigation */}
+          <div className="nav-menu">
             <Link 
-              className={`nav-link ${isActiveLink('/cart')}`} 
-              to="/cart"
+              className={`nav-link ${isActiveLink('/')}`} 
+              to="/"
             >
-              <div className="cart-wrapper">
-                <i className="fas fa-shopping-cart"></i>
-                {getCartItemsCount() > 0 && (
-                  <span className="cart-badge">{getCartItemsCount()}</span>
-                )}
-              </div>
-              <span>Cart</span>
+              <i className="fas fa-home"></i>
+              <span>Home</span>
             </Link>
-          )}
-        </div>
+            
+            <Link 
+              className={`nav-link ${isActiveLink('/clubs')}`} 
+              to="/clubs"
+            >
+              <i className="fas fa-search-location"></i>
+              <span>Explore</span>
+            </Link>
 
-        {/* User Section */}
-        <div className="nav-user">
-          {user ? (
-            <div className="user-menu">
-              <div className="user-info">
-                <div className="user-avatar">
-                  {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+            {user && user.role === 'user' && (
+              <Link 
+                className={`nav-link ${isActiveLink('/cart')}`} 
+                to="/cart"
+              >
+                <div className="cart-wrapper">
+                  <i className="fas fa-shopping-cart"></i>
+                  {getCartItemsCount() > 0 && (
+                    <span className="cart-badge">{getCartItemsCount()}</span>
+                  )}
                 </div>
-                <span className="user-name">{user.name}</span>
-                <i className="fas fa-chevron-down"></i>
-              </div>
-              
-              <div className="user-dropdown">
-                <div className="dropdown-section">
-                  <div className="user-email">{user.email}</div>
-                  <div className={`user-role ${user.role}`}>
-                    {user.role.replace('_', ' ')}
+                <span>Cart</span>
+              </Link>
+            )}
+          </div>
+
+          {/* User Section */}
+          <div className="nav-user">
+            {user ? (
+              <div className="user-menu">
+                <div className="user-info">
+                  <div className="user-avatar">
+                    {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                  </div>
+                  <span className="user-name">{user.name}</span>
+                  <i className="fas fa-chevron-down"></i>
+                </div>
+                
+                <div className="user-dropdown">
+                  <div className="dropdown-section">
+                    <div className="user-email">{user.email}</div>
+                    <div className={`user-role ${user.role}`}>
+                      {user.role.replace('_', ' ')}
+                    </div>
+                  </div>
+                  
+                  <div className="dropdown-section">
+                    <Link 
+                      className="dropdown-item" 
+                      to="/profile"
+                    >
+                      <i className="fas fa-user"></i>
+                      <span>Profile</span>
+                    </Link>
+                    
+                    {user.role === 'user' && (
+                      <Link 
+                        className="dropdown-item" 
+                        to="/orders"
+                      >
+                        <i className="fas fa-history"></i>
+                        <span>Orders</span>
+                      </Link>
+                    )}
+                    
+                    {(user.role === 'club_owner' || user.role === 'admin') && (
+                      <Link 
+                        className="dropdown-item" 
+                        to="/owner/dashboard"
+                      >
+                        <i className="fas fa-chart-line"></i>
+                        <span>Dashboard</span>
+                      </Link>
+                    )}
+                    
+                    {user.role === 'staff' && (
+                      <Link 
+                        className="dropdown-item" 
+                        to="/staff/dashboard"
+                      >
+                        <i className="fas fa-concierge-bell"></i>
+                        <span>Staff Panel</span>
+                      </Link>
+                    )}
+                  </div>
+                  
+                  <div className="dropdown-section">
+                    <button 
+                      className="dropdown-item logout-btn" 
+                      onClick={handleLogout}
+                    >
+                      <i className="fas fa-sign-out-alt"></i>
+                      <span>Logout</span>
+                    </button>
                   </div>
                 </div>
-                
-                <div className="dropdown-section">
-                  <Link 
-                    className="dropdown-item" 
-                    to="/profile"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <i className="fas fa-user"></i>
-                    <span>Profile</span>
-                  </Link>
-                  
-                  {user.role === 'user' && (
-                    <Link 
-                      className="dropdown-item" 
-                      to="/orders"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      <i className="fas fa-history"></i>
-                      <span>Orders</span>
-                    </Link>
-                  )}
-                  
-                  {(user.role === 'club_owner' || user.role === 'admin') && (
-                    <Link 
-                      className="dropdown-item" 
-                      to="/owner/dashboard"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      <i className="fas fa-chart-line"></i>
-                      <span>Dashboard</span>
-                    </Link>
-                  )}
-                  
-                  {user.role === 'staff' && (
-                    <Link 
-                      className="dropdown-item" 
-                      to="/staff/dashboard"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      <i className="fas fa-concierge-bell"></i>
-                      <span>Staff Panel</span>
-                    </Link>
-                  )}
-                </div>
-                
-                <div className="dropdown-section">
-                  <button 
-                    className="dropdown-item logout-btn" 
-                    onClick={handleLogout}
-                  >
-                    <i className="fas fa-sign-out-alt"></i>
-                    <span>Logout</span>
-                  </button>
-                </div>
+              </div>
+            ) : (
+              <div className="auth-buttons">
+                <Link 
+                  className="nav-link" 
+                  to="/login"
+                >
+                  <i className="fas fa-sign-in-alt"></i>
+                  <span>Login</span>
+                </Link>
+                <Link 
+                  className="nav-btn primary" 
+                  to="/register"
+                >
+                  <span>Sign Up</span>
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button 
+            className={`mobile-menu-btn ${isMobileMenuOpen ? 'open' : ''}`}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      <div 
+        className={`mobile-menu-overlay ${isMobileMenuOpen ? 'open' : ''}`}
+        onClick={handleOverlayClick}
+      />
+
+      {/* Mobile Menu - Left Edge */}
+      <div className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
+        {/* Mobile Menu Header */}
+        <div className="mobile-menu-header">
+          <div className="mobile-user-info">
+            <div className="mobile-user-avatar">
+              {user ? (user.name ? user.name.charAt(0).toUpperCase() : 'U') : 'G'}
+            </div>
+            <div className="mobile-user-details">
+              <div className="mobile-user-name">
+                {user ? user.name : 'Guest'}
+              </div>
+              <div className="mobile-user-email">
+                {user ? user.email : 'Welcome to ClubSync'}
               </div>
             </div>
-          ) : (
-            <div className="auth-buttons">
-              <Link 
-                className="nav-link" 
-                to="/login"
-              >
-                <i className="fas fa-sign-in-alt"></i>
-                <span>Login</span>
-              </Link>
-              <Link 
-                className="nav-btn primary" 
-                to="/register"
-              >
-                <span>Sign Up</span>
-              </Link>
-            </div>
-          )}
+          </div>
+          <button 
+            className="mobile-close-btn"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            ×
+          </button>
         </div>
-
-        {/* Mobile Menu Button */}
-        <button 
-          className="mobile-menu-btn"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
+        
+        {/* Navigation Links */}
         <Link 
           className={`mobile-link ${isActiveLink('/')}`} 
           to="/"
-          onClick={() => setIsMenuOpen(false)}
         >
           <i className="fas fa-home"></i>
           <span>Home</span>
@@ -206,7 +241,6 @@ const Navbar = () => {
         <Link 
           className={`mobile-link ${isActiveLink('/clubs')}`} 
           to="/clubs"
-          onClick={() => setIsMenuOpen(false)}
         >
           <i className="fas fa-search-location"></i>
           <span>Explore Clubs</span>
@@ -216,24 +250,20 @@ const Navbar = () => {
           <Link 
             className={`mobile-link ${isActiveLink('/cart')}`} 
             to="/cart"
-            onClick={() => setIsMenuOpen(false)}
           >
-            <div className="cart-wrapper">
-              <i className="fas fa-shopping-cart"></i>
-              {getCartItemsCount() > 0 && (
-                <span className="cart-badge">{getCartItemsCount()}</span>
-              )}
-            </div>
+            <i className="fas fa-shopping-cart"></i>
             <span>Cart</span>
+            {getCartItemsCount() > 0 && (
+              <span className="mobile-cart-badge">{getCartItemsCount()}</span>
+            )}
           </Link>
         )}
 
         {user ? (
           <>
             <Link 
-              className="mobile-link" 
+              className={`mobile-link ${isActiveLink('/profile')}`} 
               to="/profile"
-              onClick={() => setIsMenuOpen(false)}
             >
               <i className="fas fa-user"></i>
               <span>Profile</span>
@@ -241,12 +271,31 @@ const Navbar = () => {
             
             {user.role === 'user' && (
               <Link 
-                className="mobile-link" 
+                className={`mobile-link ${isActiveLink('/orders')}`} 
                 to="/orders"
-                onClick={() => setIsMenuOpen(false)}
               >
                 <i className="fas fa-history"></i>
                 <span>Orders</span>
+              </Link>
+            )}
+            
+            {(user.role === 'club_owner' || user.role === 'admin') && (
+              <Link 
+                className={`mobile-link ${isActiveLink('/owner/dashboard')}`} 
+                to="/owner/dashboard"
+              >
+                <i className="fas fa-chart-line"></i>
+                <span>Dashboard</span>
+              </Link>
+            )}
+            
+            {user.role === 'staff' && (
+              <Link 
+                className={`mobile-link ${isActiveLink('/staff/dashboard')}`} 
+                to="/staff/dashboard"
+              >
+                <i className="fas fa-concierge-bell"></i>
+                <span>Staff Panel</span>
               </Link>
             )}
             
@@ -261,17 +310,15 @@ const Navbar = () => {
         ) : (
           <>
             <Link 
-              className="mobile-link" 
+              className={`mobile-link ${isActiveLink('/login')}`} 
               to="/login"
-              onClick={() => setIsMenuOpen(false)}
             >
               <i className="fas fa-sign-in-alt"></i>
               <span>Login</span>
             </Link>
             <Link 
-              className="mobile-link" 
+              className={`mobile-link ${isActiveLink('/register')}`} 
               to="/register"
-              onClick={() => setIsMenuOpen(false)}
             >
               <i className="fas fa-user-plus"></i>
               <span>Sign Up</span>
@@ -279,7 +326,7 @@ const Navbar = () => {
           </>
         )}
       </div>
-    </nav>
+    </>
   );
 };
 
