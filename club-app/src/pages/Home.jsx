@@ -139,61 +139,73 @@ const Home = () => {
   return (
     <div className="home-page">
       {/* Hero Section */}
-      <section className="hero-section">
-        <div className="container">
-          <div className="hero-content-wrapper">
-            <div className="hero-content">
-              <h1 className="hero-title">
-                Experience Nightlife
-                <span className="highlight"> Reimagined</span>
-              </h1>
-              <p className="hero-description">
-                Skip the lines, avoid the wait. Pre-order your drinks and food from the best clubs 
-                in town. Enjoy seamless ordering, secure payments, and instant pickup with QR codes.
-              </p>
-              
-              {/* Animated Text */}
-              <div className="animated-text-container">
-                <span className="animated-text">
-                  {animatedTexts[currentAnimatedText]}
-                </span>
-              </div>
+<section className="hero-section">
+  <div className="container">
+    <div className="hero-content-wrapper">
+      <div className="hero-content">
+        <h1 className="hero-title">
+          Experience Nightlife
+          <span className="highlight"> Reimagined</span>
+        </h1>
+        <p className="hero-description">
+          Skip the lines, avoid the wait. Pre-order your drinks and food from the best clubs 
+          in town. Enjoy seamless ordering, secure payments, and instant pickup with QR codes.
+        </p>
+        
+        {/* Animated Text */}
+        <div className="animated-text-container">
+          <span className="animated-text">
+            {animatedTexts[currentAnimatedText]}
+          </span>
+        </div>
 
-              <div className="hero-actions">
-                <Link to="/clubs" className="btn btn-primary">
-                  Start Shopping
-                </Link>
-                <Link to="/register" className="btn btn-secondary">
-                  Start Selling
-                </Link>
-              </div>
-              <div className="commission-badge">
-                Safe, secure, and simple platform with only 5% commission
-              </div>
-            </div>
-            
-            {/* Club Image */}
-            <div className="hero-image">
-              <img 
-                src={clubImageUrl} 
-                alt="Club atmosphere with people enjoying nightlife" 
-                className="club-image"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                  e.target.nextSibling.style.display = 'block';
-                }}
-              />
-              <div className="image-fallback" style={{display: 'none'}}>
-                <div className="fallback-content">
-                  <i className="fas fa-music"></i>
-                  <p>Club Experience</p>
-                </div>
-              </div>
-              <div className="image-overlay"></div>
-            </div>
+        <div className="hero-actions">
+          <Link to="/clubs" className="btn btn-primary">
+            Start Shopping
+          </Link>
+          <Link to="/register" className="btn btn-secondary">
+            Start Selling
+          </Link>
+        </div>
+        <div className="commission-badge">
+          Safe, secure, and simple platform with only 5% commission
+        </div>
+      </div>
+      
+      {/* Club Image */}
+      <div className="hero-image">
+        <img 
+          src={clubImageUrl} 
+          alt="Club atmosphere with people enjoying nightlife" 
+          className="club-image"
+          onError={(e) => {
+            e.target.style.display = 'none';
+            e.target.nextSibling.style.display = 'block';
+          }}
+        />
+        <div className="image-fallback" style={{display: 'none'}}>
+          <div className="fallback-content">
+            <i className="fas fa-music"></i>
+            <p>Club Experience</p>
           </div>
         </div>
-      </section>
+        <div className="image-overlay"></div>
+      </div>
+
+      {/* Secure Payment Floating Card */}
+      <div className="secure-payment-floating-card">
+        <h3>
+          <i className="fas fa-shield-alt"></i>
+          Secure Payment
+        </h3>
+        <p>Encrypted payments with instant confirmation</p>
+        <div className="payment-badge">
+          Only 5% Commission
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Secure Payment Section */}
       <section className="payment-section">
