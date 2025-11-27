@@ -1,0 +1,93 @@
+
+.drink-card {
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.drink-image {
+  position: relative;
+  height: 160px;
+  overflow: hidden;
+}
+
+.drink-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.drink-card:hover .drink-image img {
+  transform: scale(1.1);
+}
+
+.drink-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.drink-card:hover .drink-overlay {
+  opacity: 1;
+}
+
+.btn-add-to-cart {
+  border-radius: 25px;
+  padding: 0.5rem 1.5rem;
+  font-weight: 600;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.drink-card:hover .btn-add-to-cart {
+  transform: translateY(0);
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.drink-info {
+  text-align: center;
+}
+
+.drink-name {
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+}
+
+.drink-category {
+  color: var(--text-light);
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.drink-price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+@media (max-width: 768px) {
+  .drink-image {
+    height: 140px;
+  }
+  
+  .btn-add-to-cart {
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+  }
+}

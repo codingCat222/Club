@@ -1,0 +1,270 @@
+
+.orders-page {
+  padding: 2rem 0;
+  min-height: 100vh;
+  background: var(--light);
+}
+
+.orders-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  color: var(--text-light);
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--light-gray);
+  border-top: 4px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+.orders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.header-content h1 {
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 0.5rem;
+  font-size: 2.5rem;
+}
+
+.header-content p {
+  color: var(--text-light);
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.header-stats {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+  min-width: 180px;
+}
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.stat-icon.completed {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success);
+}
+
+.stat-icon.total {
+  background: rgba(139, 92, 246, 0.1);
+  color: var(--primary);
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--dark);
+  line-height: 1;
+}
+
+.stat-label {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.orders-filters {
+  margin-bottom: 2rem;
+}
+
+.filter-tabs {
+  display: flex;
+  background: white;
+  border-radius: 15px;
+  padding: 0.5rem;
+  box-shadow: var(--shadow);
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filter-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: none;
+  border: none;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  color: var(--text-light);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  white-space: nowrap;
+}
+
+.filter-tab:hover {
+  background: var(--light);
+  color: var(--primary);
+}
+
+.filter-tab.active {
+  background: var(--primary);
+  color: white;
+}
+
+.tab-badge {
+  background: var(--secondary);
+  color: white;
+  border-radius: 10px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  min-width: 20px;
+  text-align: center;
+}
+
+.orders-content {
+  margin-bottom: 3rem;
+}
+
+.orders-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.no-orders {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+.no-orders-icon {
+  font-size: 4rem;
+  color: var(--light-gray);
+  margin-bottom: 1.5rem;
+  animation: bounce 2s infinite;
+}
+
+.no-orders h3 {
+  color: var(--dark);
+  margin-bottom: 1rem;
+}
+
+.no-orders p {
+  color: var(--text-light);
+  margin-bottom: 2rem;
+}
+
+.orders-summary {
+  margin-top: 3rem;
+}
+
+.summary-card {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+}
+
+.summary-card h4 {
+  color: var(--dark);
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 1.5rem;
+  background: var(--light);
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow);
+}
+
+.stat-value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  color: var(--text-light);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .orders-page {
+    padding: 1rem 0;
+  }
+  
+  .orders-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .header-stats {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .stat-card {
+    flex: 1;
+    min-width: 140px;
+  }
+  
+  .filter-tabs {
+    flex-direction: column;
+  }
+  
+  .filter-tab {
+    justify-content: center;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

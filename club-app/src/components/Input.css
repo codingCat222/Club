@@ -1,0 +1,128 @@
+
+.input-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.input-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.required {
+  color: var(--error);
+  margin-left: 0.25rem;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--light-gray);
+  border-radius: 8px;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.input-wrapper:hover {
+  border-color: var(--primary-light);
+}
+
+.input-wrapper.focused {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.input-wrapper.error {
+  border-color: var(--error);
+}
+
+.input-wrapper.success {
+  border-color: var(--success);
+}
+
+.input-wrapper.disabled {
+  background: var(--light-gray);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  color: var(--text-light);
+  z-index: 1;
+}
+
+.input-field {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0.75rem 1rem;
+  padding-left: 2.5rem;
+  font-size: 1rem;
+  background: transparent;
+  width: 100%;
+}
+
+.input-field:disabled {
+  cursor: not-allowed;
+}
+
+.input-wrapper:has(.input-icon) .input-field {
+  padding-left: 3rem;
+}
+
+.password-toggle {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: color 0.3s ease;
+  margin-right: 0.5rem;
+}
+
+.password-toggle:hover {
+  color: var(--primary);
+}
+
+.input-error {
+  color: var(--error);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.input-success {
+  color: var(--success);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.input-error::before {
+  content: '⚠';
+}
+
+.input-success::before {
+  content: '✓';
+}
+
+@media (max-width: 768px) {
+  .input-field {
+    padding: 0.65rem 0.85rem;
+    padding-left: 2.25rem;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+  
+  .input-wrapper:has(.input-icon) .input-field {
+    padding-left: 2.75rem;
+  }
+}

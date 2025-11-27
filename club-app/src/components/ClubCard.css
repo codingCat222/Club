@@ -1,0 +1,132 @@
+
+.club-card {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.club-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.club-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.club-card:hover .club-image img {
+  transform: scale(1.1);
+}
+
+.club-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 100%);
+}
+
+.club-rating, .club-distance {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  font-weight: 600;
+  background: rgba(0,0,0,0.6);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.club-rating i {
+  color: #FFD700;
+}
+
+.club-distance i {
+  color: var(--primary-light);
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.club-category {
+  margin-bottom: 0.5rem;
+}
+
+.category-badge {
+  background: var(--primary-light);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.club-name {
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.club-description {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.club-features {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-light);
+  font-size: 0.85rem;
+}
+
+.feature i {
+  color: var(--primary);
+}
+
+.club-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  flex: 1;
+  border-radius: 25px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .club-features {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .club-image {
+    height: 180px;
+  }
+}
